@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer Data</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="data.json"></script>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Customer Data</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+      
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div id="customerTable"></div>
+        </div>
+      </div>
+    </div><!-- /.container -->
+
+    <script type="text/template" class="customerTable">
+      <h2 class="page-header">Customers</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Email</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% _.each(customers, function(customer){ %>
+            <tr>
+              <td><%- customer._id %></td>
+              <td><%- customer.name %></td>
+              <td><%- customer.company %></td>
+              <td><%- customer.email %></td>
+              <td><a class="btn btn-default" href="details.html?customer=<%- customer._id %>">Details</a></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </script>
+
+    <script>
+      // Create Template
+      var customerTableTemplate = _.template($("script.customerTable").html());
+
+      // Sort Customers
+      var customers = _.sortBy(customers, 'name');
+
+      // Get Customer Data
+      var templateData = {
+        customers: customers
+      }
+
+      // Display Template
+      $("#customerTable").html(customerTableTemplate(templateData));
+    </script>
+   
+    
+  </body>
+</html>
